@@ -1,9 +1,9 @@
+import Container from 'react-dom';
+
 function App() {
-  return (
-    <div className="App">
-      <h1>привет</h1>
-    </div>
-  );
+  <Container>
+    <h1>Hello</h1>
+  </Container>;
 }
 
 export default App;
