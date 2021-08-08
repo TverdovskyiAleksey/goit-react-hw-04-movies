@@ -19,6 +19,9 @@ const MoviesPage = () => {
   };
 
   useEffect(() => {
+    if (value === '') {
+      return;
+    }
     Api.fetchQuery(value)
       .then(({ results }) => {
         setList(results);
@@ -32,13 +35,13 @@ const MoviesPage = () => {
       <button type="submit">Search</button>
       {list && (
         <ul>
-          {list.map(({ id, title }) => (
+          {list.map(({ id, title, query }) => (
             <li key={id}>
               <Link
                 to={{
                   pathname: `/movies/${id}`,
                   state: {
-                    backUrl: '/',
+                    backUrl: pathname,
                   },
                 }}
               >
