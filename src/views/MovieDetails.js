@@ -13,16 +13,14 @@ import Cast from './Cast';
 import Reviews from './Reviews';
 
 const MoviesView = () => {
-  const [movie, setMovie] = useState('');
-  const { state } = useLocation();
+  const [movie, setMovie] = useState(null);
+  const location = useLocation();
   const { url, path } = useRouteMatch();
   const history = useHistory();
   const { id } = useParams();
 
   const handleGoBack = () => {
-    history.push({
-      pathname: state?.backUrl || '/',
-    });
+    history.push({ pathname: location?.state?.from ?? '/movies' });
   };
 
   useEffect(() => {
@@ -44,7 +42,7 @@ const MoviesView = () => {
           </button>
           <div className={styles.movie}>
             <img
-              className={styles.poster}
+              className={styles.posterDetails}
               src={
                 movie.poster_path !== null
                   ? `https://image.tmdb.org/t/p/w500${movie.poster_path}`

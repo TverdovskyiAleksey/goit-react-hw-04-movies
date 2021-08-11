@@ -1,9 +1,10 @@
 import { useEffect, useState } from 'react';
-import { useLocation, useHistory, Link } from 'react-router-dom';
+import { useLocation, useHistory, Link, useRouteMatch } from 'react-router-dom';
 import qs from 'query-string';
 import * as Api from '../Services/Api';
 
 const MoviesPage = () => {
+  const { url } = useRouteMatch();
   const { pathname, search } = useLocation();
   const history = useHistory();
   const [value, setValue] = useState(qs.parse(search)?.query || '');
@@ -35,11 +36,11 @@ const MoviesPage = () => {
       <button type="submit">Search</button>
       {list && (
         <ul>
-          {list.map(({ id, title, query }) => (
+          {list.map(({ id, title }) => (
             <li key={id}>
               <Link
                 to={{
-                  pathname: `/movies/${id}`,
+                  pathname: `${url}/${id}`,
                   state: {
                     backUrl: pathname,
                   },

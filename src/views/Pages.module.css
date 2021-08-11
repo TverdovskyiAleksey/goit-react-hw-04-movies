@@ -8,3 +8,13 @@
 .homeItem {
   list-style: none;
 }
+
+.movie {
+  display: flex;
+}
+
+.posterDetails {
+  display: block;
+  width: 300px;
+  margin-right: 10px;
+}

@@ -29,7 +29,7 @@ const HomePage = () => {
                 pathname: `Movies/${id}`,
                 state: {
                   backUrl: pathname,
-                  value,
+                  // value,
                 },
               }}
             >
