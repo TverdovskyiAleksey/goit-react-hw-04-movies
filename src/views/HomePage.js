@@ -1,14 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useLocation, Link } from 'react-router-dom';
-import qs from 'query-string';
 import * as Api from '../Services/Api';
 import styles from './Pages.module.css';
 
 const HomePage = () => {
-  const { pathname, search } = useLocation();
+  const { pathname } = useLocation();
 
   const [list, setList] = useState([]);
-  const [value, setValue] = useState(qs.parse(search)?.query || '');
 
   useEffect(() => {
     Api.fetchMoviesTrending()

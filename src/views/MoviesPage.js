@@ -3,6 +3,7 @@ import { useLocation, useHistory, Link, useRouteMatch } from 'react-router-dom';
 import qs from 'query-string';
 import * as Api from '../Services/Api';
 import styles from './Pages.module.css';
+
 const MoviesPage = () => {
   const { url } = useRouteMatch();
   const location = useLocation();
