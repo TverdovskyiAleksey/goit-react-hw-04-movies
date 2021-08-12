@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, lazy, Suspense } from 'react';
 import {
   useLocation,
   useHistory,
@@ -9,18 +9,21 @@ import {
 import { useParams } from 'react-router';
 import styles from './Pages.module.css';
 import * as Api from '../Services/Api';
-import Cast from './Cast';
-import Reviews from './Reviews';
 
-const MoviesView = () => {
-  const [movie, setMovie] = useState(null);
-  const location = useLocation();
-  const { url, path } = useRouteMatch();
+const Cast = lazy(() => import('./Cast' /* webpackChunkName: "Cast" */));
+const Reviews = lazy(() =>
+  import('./Reviews' /* webpackChunkName: "Reviews" */),
+);
+
+const MoviesDetails = () => {
   const history = useHistory();
+  const { state } = useLocation();
+  const { url, path } = useRouteMatch();
   const { id } = useParams();
+  const [movie, setMovie] = useState(null);
 
   const handleGoBack = () => {
-    history.push({ pathname: location?.state?.from ?? '/movies' });
+    history.push(state.backUrl);
   };
 
   useEffect(() => {
@@ -71,7 +74,7 @@ const MoviesView = () => {
                   to={{
                     pathname: `${url}/cast`,
                     state: {
-                      backUrl: url,
+                      backUrl: state.backUrl,
                     },
                   }}
                 >
@@ -83,7 +86,7 @@ const MoviesView = () => {
                   to={{
                     pathname: `${url}/reviews`,
                     state: {
-                      backUrl: url,
+                      backUrl: state.backUrl,
                     },
                   }}
                 >
@@ -93,31 +96,19 @@ const MoviesView = () => {
             </ul>
           </div>
 
-          <Route path={`${path}/cast`} exact>
-            <Cast />
-          </Route>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Route path={`${path}/cast`} exact>
+              <Cast />
+            </Route>
 
-          <Route path={`${path}/reviews`}>
-            <Reviews />
-          </Route>
+            <Route path={`${path}/reviews`}>
+              <Reviews />
+            </Route>
+          </Suspense>
         </>
       )}
     </>
-    // <div>
-    //   <button onClick={handleGoBack}>Go back</button>
-    //   <h1>{data.title}</h1>
-    //   <p>User Score: {data.vote_average}</p>
-    //   <b>Overview</b>
-    //   <p>{data.overview}</p>
-    //   <b>Genres</b>
-    //   <img src={data.poster_path} alt="" />
-    //   <ul>
-    //     {data.ganers.map(({ id, name }) => (
-    //       <li key={id}>{name}</li>
-    //     ))}
-    //   </ul>
-    // </div>
   );
 };
 
-export default MoviesView;
+export default MoviesDetails;

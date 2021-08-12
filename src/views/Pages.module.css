@@ -1,11 +1,12 @@
 .homeList,
-.castList {
+.castList,
+.moviesList {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
 
-.homeItem {
+li {
   list-style: none;
 }
 

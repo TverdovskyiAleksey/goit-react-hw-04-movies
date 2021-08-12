@@ -14,7 +14,7 @@ export default function MovieDetailsPage() {
     <>
       {actors && (
         <ul className={styles.castList}>
-          {actors.cast.map(({ id, name, character, img, profile_path }) => (
+          {actors.cast.map(({ id, name, character, profile_path }) => (
             <li key={id} className={styles.item}>
               <b>{name}</b>
               <p>{`Character: ${character}`}</p>
